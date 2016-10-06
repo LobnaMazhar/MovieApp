@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Movie App</string>
+    <string name="action_settings">Settings</string>
+    <string name="sortMovieBy_prefTitle">Sort movies by</string>
+    <string name="sortMoviesBy_prefKey">sortMoviesBy</string>
+    <string name="sortMoviesBy_defaultPrefValue">popularity.desc</string>
+    <string name="mostPopular_prefValue">Most popular</string>
+    <string name="mostPopular_prefValueID">popularity.desc</string>
+    <string name="topRated_prefValue">Top rated</string>
+    <string name="topRated_prefValueID">vote_average.desc</string>
+    
+    <string-array name="sortMoviesBy_prefValues">
+        <item>@string/mostPopular_prefValue</item>
+        <item>@string/topRated_prefValue</item>
+    </string-array>
+
+    <string-array name="sortMoviesBy_prefValuesIDs">
+        <item>@string/mostPopular_prefValueID</item>
+        <item>@string/topRated_prefValueID</item>
+    </string-array>
+
 </resources>

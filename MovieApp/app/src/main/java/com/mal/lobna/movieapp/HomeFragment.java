@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ListView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -72,11 +73,12 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             String movieJsonStr = null;
 
             try {
+                String baseURL = "https://api.themoviedb.org/3/discover/movie?";
 
-                String movieID = "590";
-                String baseURL = "https://api.themoviedb.org/3/movie/" + movieID + "?";
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                String sortBy = sharedPreferences.getString(getString(R.string.sortMoviesBy_prefKey), getResources().getString(R.string.sortMoviesBy_defaultPrefValue));
 
-                Uri builtUri = Uri.parse(baseURL).buildUpon().appendQueryParameter("api_key", apiKey).build();
+                Uri builtUri = Uri.parse(baseURL).buildUpon().appendQueryParameter("api_key", apiKey).appendQueryParameter("sort_by", sortBy).build();
                 URL url = new URL(builtUri.toString());
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
@@ -134,21 +136,27 @@ public class HomeFragment extends android.support.v4.app.Fragment {
             ArrayList<Movie> movies = new ArrayList<>();
 
             JSONObject reader = new JSONObject(movieJsonStr);
+            JSONArray results = reader.getJSONArray("results");
 
-            Movie movieObject = new Movie();
-            movieObject.backdrop_path = reader.getString("backdrop_path");
-            movieObject.id = reader.getString("id");
-            movieObject.original_title = reader.getString("original_title");
-            movieObject.overview = reader.getString("overview");
-            movieObject.popularity = reader.getString("popularity");
-            movieObject.poster_path = reader.getString("poster_path");
-            movieObject.release_date = reader.getString("release_date");
-            movieObject.title = reader.getString("title");
-            movieObject.vote_average = reader.getString("vote_average");
-            movieObject.vote_count = reader.getString("vote_count");
+            for(int i=0; i<results.length(); ++i){
+                JSONObject movieData = results.getJSONObject(i);
 
-            movies.add(movieObject);
+                Movie movieObject = new Movie();
 
+                movieObject.id = movieData.getString("id");
+      //          movieObject.original_title = movieData.getString("original_title");
+       //         movieObject.overview = movieData.getString("overview");
+        //        movieObject.popularity = movieData.getString("popularity");
+                movieObject.poster_path = movieData.getString("poster_path");
+         //       movieObject.release_date = movieData.getString("release_date");
+                movieObject.title = movieData.getString("title");
+         //       movieObject.vote_average = movieData.getString("vote_average");
+           //     movieObject.vote_count = movieData.getString("vote_count");
+
+               // Log.v(LOG_TAG, "current iteration   i = " + Integer.toString(i) +  "    current ID : " + movieData.getString("id") + "   current poster+path : " + reader.getString("poster_path"));
+
+                movies.add(movieObject);
+            }
             return movies;
         }
 

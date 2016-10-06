@@ -4,7 +4,6 @@ package com.mal.lobna.movieapp;
  * Created by Lobna on 05-Oct-16.
  */
 public class Movie {
-    String backdrop_path;
     String id;
     String original_title;
     String overview;
@@ -17,5 +16,9 @@ public class Movie {
 
     public String getTitle(){
         return title;
+    }
+
+    public String getPoster_path(){
+        return poster_path;
     }
 }
