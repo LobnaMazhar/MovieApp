@@ -6,6 +6,7 @@
         android:key="@string/sortMoviesBy_prefKey"
         android:defaultValue="@string/sortMoviesBy_defaultPrefValue"
         android:entries="@array/sortMoviesBy_prefValues"
-        android:entryValues="@array/sortMoviesBy_prefValuesIDs"/>
+        android:entryValues="@array/sortMoviesBy_prefValuesIDs"
+        android:icon="@drawable/ic_movie_filter_black_24dp" />
 
 </PreferenceScreen>

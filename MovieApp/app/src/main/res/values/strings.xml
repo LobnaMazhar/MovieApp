@@ -8,15 +8,21 @@
     <string name="mostPopular_prefValueID">popularity.desc</string>
     <string name="topRated_prefValue">Top rated</string>
     <string name="topRated_prefValueID">vote_average.desc</string>
-    
+    <string name="favourites_prefValue">Favourites</string>
+    <string name="favourites_prefValueID">favourites</string>
+
     <string-array name="sortMoviesBy_prefValues">
         <item>@string/mostPopular_prefValue</item>
         <item>@string/topRated_prefValue</item>
+        <item>@string/favourites_prefValue</item>
     </string-array>
 
     <string-array name="sortMoviesBy_prefValuesIDs">
         <item>@string/mostPopular_prefValueID</item>
         <item>@string/topRated_prefValueID</item>
+        <item>@string/favourites_prefValueID</item>
     </string-array>
+
+    <string name="title_activity_movie_view">MovieViewActivity</string>
 
 </resources>
