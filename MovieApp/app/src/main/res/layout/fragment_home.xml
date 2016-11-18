@@ -1,12 +1,12 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity$HomeFragment">
+    android:id="@+id/swipeToRefresh">
 
-    <GridView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/moviesHomeGridView"
-        android:numColumns="auto_fit"></GridView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/moviesHomeRecyclerView"/>
 
-</FrameLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

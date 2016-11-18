@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.mal.lobna.movieapp.MovieViewActivity">
+    tools:context="com.mal.lobna.movieapp.Activity.MovieViewActivity"
+    android:id="@+id/movieViewLayout">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -25,7 +26,8 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/moviePosterImageView"/>
+                android:id="@+id/moviePosterImageView"
+                android:src="@drawable/movie_action"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -37,15 +39,12 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_movie_view" />
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/favouriteMovie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/btn_star_big_on"
+        android:src="@android:drawable/btn_star_big_off"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
         android:onClick="favouriteMovie"/>
