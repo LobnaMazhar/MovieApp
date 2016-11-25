@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Fragments.HomeFragment;
 import com.mal.lobna.movieapp.R;
 import com.mal.lobna.movieapp.Utilities.Utilities;
@@ -18,25 +20,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("Home page");
+        setSupportActionBar(toolbar);
+
         if (savedInstanceState == null) {
-            // No Internet connection
-            if(!Utilities.networkConnectivity(this)){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Internet connection");
-                builder.setMessage("Connect to a network");
-
-                // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                builder.show();
-            }else{
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.homeActivityLayout, new HomeFragment(), "HomeFragment").commit();
-            }
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.homeActivityLayout, new HomeFragment(), "HomeFragment").commit();
         }
     }
 

@@ -4,10 +4,12 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.mal.lobna.movieapp.Adapter.HomeAdapter;
 import com.mal.lobna.movieapp.Fragments.HomeFragment;
+import com.mal.lobna.movieapp.Managers.MovieManager;
+import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.R;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
@@ -51,11 +53,8 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
             if (prefIndex >= 0) {
                 preference.setSummary(listPreference.getEntries()[prefIndex]);
             }
-            HomeFragment.homeAdapter.movies.clear();
-        }/* else {
-            // For other preferences, set the summary to the value's simple string representation.
-            preference.setSummary(stringValue);
-        } // TODO ams7 l goz2 da */
+            HomeAdapter.clearAdapter();
+        }
         return true;
     }
 }

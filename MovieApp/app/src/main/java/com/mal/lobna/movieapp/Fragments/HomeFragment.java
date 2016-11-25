@@ -12,46 +12,40 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Adapter.HomeAdapter;
 import com.mal.lobna.movieapp.Application.MovieApplication;
+import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Data.MovieDataSource;
-import com.mal.lobna.movieapp.FetchMovies;
+import com.mal.lobna.movieapp.Managers.MovieManager;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.Activity.MovieViewActivity;
-import com.mal.lobna.movieapp.OnItemClickListener;
+import com.mal.lobna.movieapp.Listeners.MoviesListener;
+import com.mal.lobna.movieapp.Listeners.OnMovieClickListener;
 import com.mal.lobna.movieapp.R;
+import com.mal.lobna.movieapp.Utilities.Utilities;
 
 import java.util.ArrayList;
 
 /**
  * Created by Lobna on 05-Oct-16.
  */
-public class HomeFragment extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener, MoviesListener {
 
     private final String LOG_TAG = HomeFragment.class.getSimpleName();
 
-    ArrayList<Movie> moviesEntries;
     RecyclerView moviesHomeView;
-    public static HomeAdapter homeAdapter;
-    ProgressDialog progressDialog;
-    private SwipeRefreshLayout swipeToRefresh;
+    public HomeAdapter homeAdapter;
 
-    public final static String ORIGINAL_TITLE_KEY = "Original title";
-    public final static String MOVIE_POSTER_KEY = "Movie Poster";
-    public final static String OVERVIEW_KEY = "Overview";
-    public final static String AVERAGE_VOTING_KEY = "Average Voting";
-    public final static String RELEASE_DATE_KEY = "Release Date";
+    private SwipeRefreshLayout swipeToRefresh;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please Wait");
-
-        moviesEntries = new ArrayList<>();
 
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         moviesHomeView = (RecyclerView) rootView.findViewById(R.id.moviesHomeRecyclerView);
         moviesHomeView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
@@ -60,44 +54,52 @@ public class HomeFragment extends android.support.v4.app.Fragment implements Swi
                 , getResources().getColor(R.color.colorPrimaryDark),getResources().getColor(R.color.colorAccent));
         swipeToRefresh.setOnRefreshListener(this);
 
-        homeAdapter = new HomeAdapter(getActivity(), moviesEntries, new OnItemClickListener() {
-            @Override
-            public void onItemClick(Movie item) {
-                Intent goToMovieViewActivity = new Intent(getActivity(), MovieViewActivity.class);
-                goToMovieViewActivity.putExtra(ORIGINAL_TITLE_KEY, item.getOriginal_title());
-                goToMovieViewActivity.putExtra(MOVIE_POSTER_KEY, item.getPoster_path());
-                goToMovieViewActivity.putExtra(OVERVIEW_KEY, item.getOverview());
-                goToMovieViewActivity.putExtra(AVERAGE_VOTING_KEY, item.getVote_average());
-                goToMovieViewActivity.putExtra(RELEASE_DATE_KEY, item.getRelease_date());
-                startActivity(goToMovieViewActivity);
-            }
-        });
-        moviesHomeView.setAdapter(homeAdapter);
-
         updateMovies();
 
         return rootView;
     }
 
     public void updateMovies() {
-        Context context = MovieApplication.getMovieApp().getApplicationContext();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String sortBy = sharedPreferences.getString(context.getString(R.string.sortMoviesBy_prefKey), context.getResources().getString(R.string.sortMoviesBy_defaultPrefValue));
-        if(sortBy.equals(R.string.favourites_prefValueID)){
-            ArrayList<Movie> movies = MovieDataSource.getInstance().getFavourites();
-            if (movies != null) {
-                homeAdapter.movies.clear();
-                for (Movie movie : movies)
-                    homeAdapter.movies.add(movie);
-            }
-            swipeToRefresh.setRefreshing(false);
-        }else{
-            new FetchMovies(getActivity(), progressDialog, sortBy, swipeToRefresh).execute();
-        }
+        MovieManager.getInstance().getMovies(this);
+    }
+
+    // TODO any other method ama y3'yr el preferences ttndh bdl ma y3ml onStart
+    @Override
+    public void onStart() {
+        updateMovies();
+        super.onStart();
     }
 
     @Override
     public void onRefresh() {
         updateMovies();
+    }
+
+    @Override
+    public void onDownloadFinished(ArrayList<Movie> movies) {
+        swipeToRefresh.setRefreshing(false);
+
+        homeAdapter = new HomeAdapter(getActivity(), movies, new OnMovieClickListener() {
+            @Override
+            public void onMovieClick(Movie item) {
+                Intent goToMovieViewActivity = new Intent(getActivity(), MovieViewActivity.class);
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_ID, item.getId());
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE, item.getOriginal_title());
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER, item.getPoster_path());
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_OVERVIEW, item.getOverview());
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_AVERAGE_VOTING, item.getVote_average());
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_RELEASE_DATE, item.getRelease_date());
+               // goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE, item.isFavourite());
+                goToMovieViewActivity.putExtra(MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE, MovieDataSource.getInstance().isFav(item.getId()));
+                startActivity(goToMovieViewActivity);
+            }
+        });
+        moviesHomeView.setAdapter(homeAdapter);
+    }
+
+    @Override
+    public void onFail(Exception e) {
+        swipeToRefresh.setRefreshing(false);
+        Utilities.noInternet();
     }
 }

@@ -1,21 +1,23 @@
 package com.mal.lobna.movieapp.Models;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lobna on 05-Oct-16.
  */
 public class Movie {
- //   int id;
-    String original_title;
-    String overview;
-    String popularity;
-    String poster_path;
-    String release_date;
-    String title;
-    String vote_average;
-    String vote_count;
-    boolean favourite;
+    private int id;
+    private String original_title;
+    private String overview;
+    private String poster_path;
+    private String release_date;
+    private String vote_average;
+    private boolean favourite;
 
-  //  public void setId(int id) { this.id = id; }
+    private ArrayList<Trailer> trailers;
+    private ArrayList<Review> reviews;
+
+    public void setId(int id) { this.id = id; }
 
     public void setOriginal_title(String original_title) {
         this.original_title = original_title;
@@ -45,7 +47,7 @@ public class Movie {
         this.favourite = favourite;
     }
 
-  //  public int getId(){ return id; }
+    public int getId(){ return id; }
 
     public String getOriginal_title(){
         return original_title;

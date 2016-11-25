@@ -27,7 +27,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/moviePosterImageView"
+                android:scaleType="centerCrop"
                 android:src="@drawable/movie_action"/>
+
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -38,6 +40,8 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_movie_view" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/favouriteMovie"

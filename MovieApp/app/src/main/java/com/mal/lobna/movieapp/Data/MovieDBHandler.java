@@ -13,7 +13,7 @@ import com.mal.lobna.movieapp.Data.MovieContract.MovieTable;
 
 public class MovieDBHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
 
     private static final String DATABSE_NAME = "movies.db";
 
@@ -36,8 +36,8 @@ public class MovieDBHandler extends SQLiteOpenHelper {
 
     public void createMovieTable(SQLiteDatabase sqLiteDatabase) {
         String query = "CREATE TABLE " + MovieTable.MOVIE_TABLE + " ( " +
-             //   MovieTable.COLOUMN_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +
-                MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE + " TEXT NOT NULL PRIMARY KEY UNIQUE, " +
+                MovieTable.COLOUMN_ID + " INTEGER NOT NULL PRIMARY KEY UNIQUE, " +
+                MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE + " TEXT NOT NULL UNIQUE, " +
                 MovieTable.COLOUMN_MOVIE_POSTER + " TEXT NOT NULL UNIQUE, " +
                 MovieTable.COLOUMN_MOVIE_OVERVIEW + " TEXT NOT NULL UNIQUE, " +
                 MovieTable.COLOUMN_MOVIE_AVERAGE_VOTING + " TEXT DEFAULT 0, " +

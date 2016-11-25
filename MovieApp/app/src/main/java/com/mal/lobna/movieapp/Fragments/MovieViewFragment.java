@@ -1,27 +1,14 @@
 package com.mal.lobna.movieapp.Fragments;
 
-import android.app.Application;
-import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mal.lobna.movieapp.Activity.MovieViewActivity;
-import com.mal.lobna.movieapp.Adapter.HomeAdapter;
-import com.mal.lobna.movieapp.Application.MovieApplication;
-import com.mal.lobna.movieapp.Data.MovieDataSource;
+import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Models.Movie;
-import com.mal.lobna.movieapp.OnItemClickListener;
 import com.mal.lobna.movieapp.R;
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 /**
  * Created by Lobna on 13-Nov-16.
@@ -44,27 +31,31 @@ public class MovieViewFragment extends android.support.v4.app.Fragment {
     }
 
     private void getData(View view) {
-        String originalTitle = getActivity().getIntent().getExtras().getString(HomeFragment.ORIGINAL_TITLE_KEY);
+        int id = getActivity().getIntent().getExtras().getInt(MovieContract.MovieTable.COLOUMN_ID);
+        movie.setId(id);
+
+        String originalTitle = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE);
         movie.setOriginal_title(originalTitle);
 
-        String baseURL = "http://image.tmdb.org/t/p/";
-        String size = "original/";
-        String posterPath = getActivity().getIntent().getExtras().getString(HomeFragment.MOVIE_POSTER_KEY);
+        String posterPath = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER);
         movie.setPoster_path(posterPath);
 
-        String overview = getActivity().getIntent().getExtras().getString(HomeFragment.OVERVIEW_KEY);
+        String overview = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_OVERVIEW);
         TextView movieOverviewTextView = (TextView) view.findViewById(R.id.movieOverviewTextView);
         movieOverviewTextView.setText(overview);
         movie.setOverview(overview);
 
-        String voteAverage = getActivity().getIntent().getExtras().getString(HomeFragment.AVERAGE_VOTING_KEY);
+        String voteAverage = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_AVERAGE_VOTING);
         TextView movieAverageVoteTextView = (TextView) view.findViewById(R.id.movieAverageVoteTextView);
         movieAverageVoteTextView.setText("The average votes for this movie is " + voteAverage);
         movie.setVote_average(voteAverage);
 
-        String releaseDate = getActivity().getIntent().getExtras().getString(HomeFragment.RELEASE_DATE_KEY);
+        String releaseDate = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_RELEASE_DATE);
         TextView movieReleaseDateTextView = (TextView) view.findViewById(R.id.movieReleaseDateTextView);
         movieReleaseDateTextView.setText("This movie was released on " + releaseDate);
         movie.setRelease_date(releaseDate);
+
+        boolean favourite = getActivity().getIntent().getExtras().getBoolean(MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE);
+        movie.setFavourite(favourite);
     }
 }

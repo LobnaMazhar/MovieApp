@@ -6,9 +6,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.mal.lobna.movieapp.Models.Movie;
-import com.mal.lobna.movieapp.OnItemClickListener;
+import com.mal.lobna.movieapp.Listeners.OnMovieClickListener;
 import com.mal.lobna.movieapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -22,10 +23,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     private final String LOG_TAG = HomeAdapter.class.getSimpleName();
 
     private  Activity activity;
-    public ArrayList<Movie> movies;
-    private OnItemClickListener listener;
+    private static ArrayList<Movie> movies;
+    private OnMovieClickListener listener;
 
-    public HomeAdapter(Activity activity, ArrayList<Movie> movies, OnItemClickListener listener) {
+    public HomeAdapter(Activity activity, ArrayList<Movie> movies, OnMovieClickListener listener) {
         this.activity = activity;
         this.movies = movies;
         this.listener = listener;
@@ -46,6 +47,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         Log.v(LOG_TAG, baseURL + size + posterPath);
         Picasso.with(activity).load(baseURL + size + posterPath).into(holder.moviePosterImageView);
+        holder.moviePosterProgressBarGridItem.setVisibility(View.GONE);
 
         holder.bind(movies.get(position), listener);
     }
@@ -58,20 +60,27 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView moviePosterImageView;
+        ProgressBar moviePosterProgressBarGridItem;
 
         public ViewHolder(View itemView) {
             super(itemView);
             moviePosterImageView = (ImageView) itemView.findViewById(R.id.moviePosterImageViewGridItem);
-            moviePosterImageView.setImageResource(R.drawable.movie_action);
+            moviePosterProgressBarGridItem = (ProgressBar) itemView.findViewById(R.id.moviePosterProgressBarGridItem);
+            if(moviePosterProgressBarGridItem.getVisibility()==View.GONE)
+                moviePosterProgressBarGridItem.setVisibility(View.VISIBLE);
         }
 
-        public void bind(final Movie item, final OnItemClickListener listener) {
+        public void bind(final Movie item, final OnMovieClickListener listener) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(item);
+                    listener.onMovieClick(item);
                 }
             });
         }
+    }
+
+    public static void clearAdapter(){
+        movies.clear();
     }
 }

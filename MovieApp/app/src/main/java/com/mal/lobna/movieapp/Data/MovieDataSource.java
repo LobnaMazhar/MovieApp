@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.mal.lobna.movieapp.Application.MovieApplication;
 import com.mal.lobna.movieapp.Models.Movie;
@@ -41,7 +42,7 @@ public class MovieDataSource {
     private ContentValues getContentValuesFromMovie(Movie movie) {
         ContentValues movieContentValues = new ContentValues();
 
-        //    movieContentValues.put(MovieContract.MovieTable.COLOUMN_ID, movie.getId());
+        movieContentValues.put(MovieContract.MovieTable.COLOUMN_ID, movie.getId());
         movieContentValues.put(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE, movie.getOriginal_title());
         movieContentValues.put(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER, movie.getPoster_path());
         movieContentValues.put(MovieContract.MovieTable.COLOUMN_MOVIE_OVERVIEW, movie.getOverview());
@@ -55,7 +56,7 @@ public class MovieDataSource {
     private Movie getMovieFromCursor(Cursor cursor) {
         Movie movie = new Movie();
 
-//        movie.setId(cursor.getInt(cursor.getColumnIndex(MovieContract.MovieTable.COLOUMN_ID)));
+        movie.setId(cursor.getInt(cursor.getColumnIndex(MovieContract.MovieTable.COLOUMN_ID)));
         movie.setOriginal_title(cursor.getString(cursor.getColumnIndex(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE)));
         movie.setPoster_path(cursor.getString(cursor.getColumnIndex(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER)));
         movie.setOverview(cursor.getString(cursor.getColumnIndex(MovieContract.MovieTable.COLOUMN_MOVIE_OVERVIEW)));
@@ -66,21 +67,22 @@ public class MovieDataSource {
         return movie;
     }
 
-    public void insertList(List<Movie> movies) {
+    public void insertList(ArrayList<Movie> movies) {
 
-        // deleteMovies();
+        deleteNonFavouriteMovies();
 
         for (Movie movie : movies) {
 
             ContentValues contentValues = getContentValuesFromMovie(movie);
 
+            // TODO ams7 l kalam da lama insert w favourite ysht3'lu tamam
             /*Cursor cursor = database.query(MovieContract.MovieTable.MOVIE_TABLE,
                     null, MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE + " = ?", new String[]{movie.getOriginal_title()},
                     null, null, null);
 
             if (cursor == null)*/
-                database.insert(MovieContract.MovieTable.MOVIE_TABLE, null, contentValues);
-
+            long id = database.insert(MovieContract.MovieTable.MOVIE_TABLE, null, contentValues);
+            Log.v("id", Long.toString(id));
             /*Cursor cursor = database.query(MovieContract.MovieTable.MOVIE_TABLE,
                     null, MovieContract.MovieTable.COLOUMN_ID + " = " + insertId, null,
                     null, null, null);
@@ -96,22 +98,16 @@ public class MovieDataSource {
     }
 
     public void markAsFav(Movie movie) {
-
         ContentValues contentValues = getContentValuesFromMovie(movie);
-        database.update(MovieContract.MovieTable.MOVIE_TABLE, contentValues
+        int nRowsAffected = database.update(MovieContract.MovieTable.MOVIE_TABLE, contentValues
                 , MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE + " = ?", new String[]{movie.getOriginal_title()});
     }
 
-    public boolean isFav(String movieOriginalTitle) {
-        Cursor cursor = database.query(MovieContract.MovieTable.MOVIE_TABLE,
-                null,//new String[]{MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE},
-                MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE + " = ?",
-                new String[]{movieOriginalTitle},
-                null, null, null);
-        /*
+    public boolean isFav(int movieId) {
+        Cursor cursor = database.query(MovieContract.MovieTable.MOVIE_TABLE, null,
+                MovieContract.MovieTable.COLOUMN_ID + " = ?",
+                new String[]{String.valueOf(movieId)}, null, null, null);
         cursor.moveToFirst();
-        return cursor.getInt(cursor.getColumnIndex(MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE)) == 1;
-        */
 
         Movie movie = getMovieFromCursor(cursor);
         return movie.isFavourite();
@@ -134,8 +130,7 @@ public class MovieDataSource {
         return movies;
     }
 
-    public void deleteMovies() {
-        database.delete(MovieContract.MovieTable.MOVIE_TABLE, null
-                , null);
+    public void deleteNonFavouriteMovies() {
+        database.delete(MovieContract.MovieTable.MOVIE_TABLE, MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE + " = ?", new String[]{"0"});
     }
 }

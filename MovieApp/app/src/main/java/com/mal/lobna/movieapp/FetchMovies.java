@@ -1,3 +1,4 @@
+/*
 package com.mal.lobna.movieapp;
 
 import android.app.ProgressDialog;
@@ -27,9 +28,13 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+*/
 /**
  * Created by Lobna on 12-Nov-16.
- */
+ *//*
+
+
+
 
 public class FetchMovies extends AsyncTask<Void, Void, ArrayList<Movie>> {
 
@@ -116,7 +121,8 @@ public class FetchMovies extends AsyncTask<Void, Void, ArrayList<Movie>> {
                 }
             }
         }
-       /* try {
+ */
+/*try {
             if (movieJsonStr == null) {
                 return new ArrayList<>(); // TODO a3'yrha l calling fn getFavourites();
             } else
@@ -124,7 +130,9 @@ public class FetchMovies extends AsyncTask<Void, Void, ArrayList<Movie>> {
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage(), e);
             e.printStackTrace();
-        }*/
+        }*//*
+
+
         return null;
     }
 
@@ -137,16 +145,13 @@ public class FetchMovies extends AsyncTask<Void, Void, ArrayList<Movie>> {
 
             Movie movieObject = new Movie();
 
-            //   movieObject.setId(Integer.valueOf(movieData.getString("id")));
+            movieObject.setId(Integer.valueOf(movieData.getString("id")));
             movieObject.setOriginal_title(movieData.getString("original_title"));
             movieObject.setPoster_path(movieData.getString("poster_path"));
             movieObject.setOverview(movieData.getString("overview"));
             movieObject.setVote_average(movieData.getString("vote_average"));
             movieObject.setRelease_date(movieData.getString("release_date"));
             movieObject.setFavourite(false);
-            // movieObject.popularity = movieData.getString("popularity");
-            // movieObject.title = movieData.getString("title");
-            // movieObject.vote_count = movieData.getString("vote_count");
 
             // Log.v(LOG_TAG, "current iteration   i = " + Integer.toString(i) +  "    current ID : " + movieData.getString("id") + "   current poster+path : " + reader.getString("poster_path"));
 
@@ -172,3 +177,4 @@ public class FetchMovies extends AsyncTask<Void, Void, ArrayList<Movie>> {
         MovieDataSource.getInstance().insertList(movies);
     }
 }
+*/

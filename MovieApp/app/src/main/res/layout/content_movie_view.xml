@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.mal.lobna.movieapp.Activity.MovieViewActivity"
+    tools:showIn="@layout/activity_movie_view">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:name="com.mal.lobna.movieapp.Fragments.MovieViewFragment"
+            android:id="@+id/movieViewFragment"
+            tools:layout="@layout/fragment_movie_view"/>
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:name="com.mal.lobna.movieapp.Fragments.TrailersFragment"
+            android:id="@+id/trailersFragment"
+            tools:layout="@layout/fragment_movie_trailers"/>
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:name="com.mal.lobna.movieapp.Fragments.ReviewsFragment"
+            android:id="@+id/reviewFragment"
+            tools:layout="@layout/fragment_movie_reviews"/>
+    </LinearLayout>
+
+
+</android.support.v4.widget.NestedScrollView>

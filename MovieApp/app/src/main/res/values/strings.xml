@@ -25,4 +25,13 @@
 
     <string name="title_activity_movie_view">MovieViewActivity</string>
 
+
+    <!-- Account type (for sync-adapter authenticator) -->
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">movieapp.mal.com</string>
+    <string name="content_authority">com.mal.lobna.movieapp.app</string>
+    <string name="home_page">Home page</string>
+    <string name="baseDiscoverURL">https://api.themoviedb.org/3/discover/movie?</string>
+    <string name="baseMovieURL">https://api.themoviedb.org/3/movie/</string>
+
 </resources>

@@ -9,7 +9,7 @@ public class MovieContract {
 
     public static final class MovieTable implements BaseColumns{
         public static final String MOVIE_TABLE = "movie";
-    //    public static final String COLOUMN_ID = "_id";
+        public static final String COLOUMN_ID = "_id";
         public static final String COLOUMN_MOVIE_ORIGINAL_TITLE = "movieoriginaltitle";
         public static final String COLOUMN_MOVIE_POSTER = "movieposter";
         public static final String COLOUMN_MOVIE_OVERVIEW = "movieoverview";
