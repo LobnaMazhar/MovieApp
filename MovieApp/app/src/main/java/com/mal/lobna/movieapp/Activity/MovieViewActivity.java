@@ -31,26 +31,24 @@ public class MovieViewActivity extends AppCompatActivity {
 
     private Movie movie;
     private FloatingActionButton favButton;
+    private static Bundle arguments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_view);
 
+        movie = (Movie) getIntent().getExtras().getSerializable("item");
+        arguments = new Bundle();
+        arguments.putSerializable("item", movie);
+      //  MovieViewFragment movieViewFragment = new MovieViewFragment();
+       // movieViewFragment.setArguments(arguments);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE));
+        toolbar.setTitle(movie.getOriginal_title());
         setSupportActionBar(toolbar);
 
         setToolbarImage();
-
-        movie = new Movie();
-        movie.setId(getIntent().getExtras().getInt(MovieContract.MovieTable.COLOUMN_ID));
-        movie.setPoster_path(getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER));
-        movie.setOriginal_title(getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE));
-        movie.setOverview(getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_OVERVIEW));
-        movie.setVote_average(getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_AVERAGE_VOTING));
-        movie.setRelease_date(getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_RELEASE_DATE));
-        movie.setFavourite(getIntent().getExtras().getBoolean(MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE));
 
         favButton = (FloatingActionButton) findViewById(R.id.favouriteMovie);
         setFavIcon();
@@ -64,7 +62,7 @@ public class MovieViewActivity extends AppCompatActivity {
     public void setToolbarImage(){
         String baseURL = "http://image.tmdb.org/t/p/";
         String size = "original/";
-        String posterPath = getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER);
+        String posterPath = movie.getPoster_path();
         ImageView moviePosterImageView = (ImageView) findViewById(R.id.moviePosterImageView);
         Picasso.with(MovieApplication.getMovieApp().getApplicationContext()).load(baseURL + size + posterPath).into(moviePosterImageView);
     }
@@ -104,5 +102,9 @@ public class MovieViewActivity extends AppCompatActivity {
             movie.setFavourite(true);
         }
         MovieDataSource.getInstance().markAsFav(movie);
+    }
+
+    public static Bundle getArguments(){
+        return arguments;
     }
 }

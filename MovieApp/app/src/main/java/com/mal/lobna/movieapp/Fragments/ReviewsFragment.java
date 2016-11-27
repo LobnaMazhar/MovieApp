@@ -10,11 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mal.lobna.movieapp.Activity.HomeActivity;
+import com.mal.lobna.movieapp.Activity.MovieViewActivity;
 import com.mal.lobna.movieapp.Adapter.ReviewAdapter;
 import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Listeners.ReviewListener;
 import com.mal.lobna.movieapp.Managers.ReviewManager;
 import com.mal.lobna.movieapp.Managers.TrailerManager;
+import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.Models.Review;
 import com.mal.lobna.movieapp.R;
 import com.mal.lobna.movieapp.Utilities.Utilities;
@@ -27,13 +30,16 @@ import java.util.ArrayList;
 
 public class ReviewsFragment extends Fragment implements ReviewListener {
 
-    private RecyclerView movieReviewsRecyclerView;
+    private static RecyclerView movieReviewsRecyclerView;
     private ReviewAdapter reviewAdapter;
+
+    private View rootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie_reviews, container, false);
+        if(rootView == null)
+            rootView = inflater.inflate(R.layout.fragment_movie_reviews, container, false);
 
         movieReviewsRecyclerView = (RecyclerView) rootView.findViewById(R.id.movieReviewsRecyclerView);
         movieReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -44,8 +50,23 @@ public class ReviewsFragment extends Fragment implements ReviewListener {
     }
 
     public void getReviews(){
-        int movieID = getActivity().getIntent().getExtras().getInt(MovieContract.MovieTable.COLOUMN_ID);
-        ReviewManager.getInstance().getReviews(movieID, this);
+        Bundle arguments = null;
+        if(getActivity().getClass().equals(MovieViewActivity.class)) {
+            arguments = ((MovieViewActivity)getActivity()).getArguments();
+        }else if(getActivity().getClass().equals(HomeActivity.class)){
+            arguments = ((HomeActivity)getActivity()).getArguments();
+        }
+
+        if(arguments != null) {
+            int movieID = ((Movie) arguments.getSerializable("item")).getId();
+            ReviewManager.getInstance().getReviews(movieID, this);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        getReviews();
+        super.onResume();
     }
 
     @Override

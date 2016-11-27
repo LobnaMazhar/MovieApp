@@ -2,11 +2,13 @@ package com.mal.lobna.movieapp.Adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mal.lobna.movieapp.Application.MovieApplication;
 import com.mal.lobna.movieapp.Listeners.OnTrailerClickListener;
 import com.mal.lobna.movieapp.Models.Review;
 import com.mal.lobna.movieapp.Models.Trailer;
@@ -30,7 +32,15 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View rootView = activity.getLayoutInflater().inflate(R.layout.movie_reviewitem, parent, false);
+        View rootView;
+        if(activity != null) {
+            rootView = activity.getLayoutInflater().inflate(R.layout.movie_reviewitem, parent, false);
+        }
+        else{
+            rootView = parent.findViewById(R.id.movieReviewItemLayout);
+           // rootView = View.inflate(MovieApplication.getMovieApp().getApplicationContext(), R.layout.movie_reviewitem, parent);
+        }
+
 
         return new ReviewAdapter.ViewHolder(rootView);
     }

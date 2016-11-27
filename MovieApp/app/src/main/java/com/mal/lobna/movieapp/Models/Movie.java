@@ -1,11 +1,12 @@
 package com.mal.lobna.movieapp.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Lobna on 05-Oct-16.
  */
-public class Movie {
+public class Movie implements Serializable {
     private int id;
     private String original_title;
     private String overview;

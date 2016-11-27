@@ -81,6 +81,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     }
 
     public static void clearAdapter(){
-        movies.clear();
+        if(movies != null)
+            movies.clear();
     }
 }

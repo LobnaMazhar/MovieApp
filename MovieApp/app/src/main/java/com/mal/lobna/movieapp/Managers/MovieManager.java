@@ -72,7 +72,6 @@ public class MovieManager {
                     BufferedReader reader = null;
 
                     String movieJsonStr = null;
-
                     try {
                         String baseURL = MovieApplication.getMovieApp().getApplicationContext().getString(R.string.baseDiscoverURL);
                         Uri builtUri = Uri.parse(baseURL).buildUpon().appendQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY).appendQueryParameter("sort_by", sortBy).build();

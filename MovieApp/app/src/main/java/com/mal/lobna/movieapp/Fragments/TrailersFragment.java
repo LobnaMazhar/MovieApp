@@ -12,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.mal.lobna.movieapp.Activity.HomeActivity;
+import com.mal.lobna.movieapp.Activity.MovieViewActivity;
 import com.mal.lobna.movieapp.Adapter.TrailerAdapter;
 import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Managers.TrailerManager;
+import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.Models.Trailer;
 import com.mal.lobna.movieapp.Listeners.OnTrailerClickListener;
 import com.mal.lobna.movieapp.R;
@@ -29,7 +32,7 @@ import java.util.ArrayList;
 
 public class TrailersFragment extends android.support.v4.app.Fragment implements TrailerListener {
 
-    private RecyclerView movieTrailersRecyclerView;
+    private static RecyclerView movieTrailersRecyclerView;
     private TrailerAdapter trailerAdapter;
 
     @Nullable
@@ -46,8 +49,23 @@ public class TrailersFragment extends android.support.v4.app.Fragment implements
     }
 
     public void getTrailers(){
-        int movieID = getActivity().getIntent().getExtras().getInt(MovieContract.MovieTable.COLOUMN_ID);
-        TrailerManager.getInstance().getTrailers(movieID, this);
+        Bundle arguments = null;
+        if(getActivity().getClass().equals(MovieViewActivity.class)) {
+            arguments = ((MovieViewActivity)getActivity()).getArguments();
+        }else if(getActivity().getClass().equals(HomeActivity.class)){
+            arguments = ((HomeActivity)getActivity()).getArguments();
+        }
+
+        if(arguments != null) {
+            int movieID = ((Movie) arguments.getSerializable("item")).getId();
+            TrailerManager.getInstance().getTrailers(movieID, this);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        getTrailers();
+        super.onResume();
     }
 
     @Override

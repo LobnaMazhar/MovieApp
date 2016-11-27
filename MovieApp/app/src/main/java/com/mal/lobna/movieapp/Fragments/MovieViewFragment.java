@@ -5,7 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mal.lobna.movieapp.Activity.HomeActivity;
+import com.mal.lobna.movieapp.Activity.MovieViewActivity;
 import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.R;
@@ -16,46 +19,44 @@ import com.mal.lobna.movieapp.R;
 
 public class MovieViewFragment extends android.support.v4.app.Fragment {
 
-    Movie movie;
+    private Movie movie;
+    private View rootView;
+    private Bundle arguments;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_movie_view, container, false);
-
-        movie = new Movie();
-        getData(rootView);
+        rootView = inflater.inflate(R.layout.fragment_movie_view, container, false);
 
         return rootView;
     }
 
-    private void getData(View view) {
-        int id = getActivity().getIntent().getExtras().getInt(MovieContract.MovieTable.COLOUMN_ID);
-        movie.setId(id);
-
-        String originalTitle = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE);
-        movie.setOriginal_title(originalTitle);
-
-        String posterPath = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_POSTER);
-        movie.setPoster_path(posterPath);
-
-        String overview = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_OVERVIEW);
+    private void setData(View view) {
         TextView movieOverviewTextView = (TextView) view.findViewById(R.id.movieOverviewTextView);
-        movieOverviewTextView.setText(overview);
-        movie.setOverview(overview);
+        movieOverviewTextView.setText(movie.getOverview());
 
-        String voteAverage = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_AVERAGE_VOTING);
         TextView movieAverageVoteTextView = (TextView) view.findViewById(R.id.movieAverageVoteTextView);
-        movieAverageVoteTextView.setText("The average votes for this movie is " + voteAverage);
-        movie.setVote_average(voteAverage);
+        movieAverageVoteTextView.setText("The average votes for this movie is " + movie.getVote_average());
 
-        String releaseDate = getActivity().getIntent().getExtras().getString(MovieContract.MovieTable.COLOUMN_MOVIE_RELEASE_DATE);
         TextView movieReleaseDateTextView = (TextView) view.findViewById(R.id.movieReleaseDateTextView);
-        movieReleaseDateTextView.setText("This movie was released on " + releaseDate);
-        movie.setRelease_date(releaseDate);
+        movieReleaseDateTextView.setText("This movie was released on " + movie.getRelease_date());
+    }
 
-        boolean favourite = getActivity().getIntent().getExtras().getBoolean(MovieContract.MovieTable.COLOUMN_MOVIE_FAVOURITE);
-        movie.setFavourite(favourite);
+    @Override
+    public void onResume() {
+        if(getActivity().getClass().equals(MovieViewActivity.class)) {
+            arguments = ((MovieViewActivity)getActivity()).getArguments();
+        }else if(getActivity().getClass().equals(HomeActivity.class)){
+            arguments = ((HomeActivity)getActivity()).getArguments();
+        }
+
+        if (arguments != null) {
+            movie = (Movie) arguments.getSerializable("item");
+            if (movie != null) {
+                setData(rootView);
+            }
+        }
+        super.onResume();
     }
 }
