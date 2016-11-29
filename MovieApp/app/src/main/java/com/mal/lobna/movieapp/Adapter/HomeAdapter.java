@@ -22,7 +22,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
     private final String LOG_TAG = HomeAdapter.class.getSimpleName();
 
-    private  Activity activity;
+    private Activity activity;
     private static ArrayList<Movie> movies;
     private OnMovieClickListener listener;
 
@@ -66,7 +66,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
             super(itemView);
             moviePosterImageView = (ImageView) itemView.findViewById(R.id.moviePosterImageViewGridItem);
             moviePosterProgressBarGridItem = (ProgressBar) itemView.findViewById(R.id.moviePosterProgressBarGridItem);
-            if(moviePosterProgressBarGridItem.getVisibility()==View.GONE)
+            if (moviePosterProgressBarGridItem.getVisibility() == View.GONE)
                 moviePosterProgressBarGridItem.setVisibility(View.VISIBLE);
         }
 
@@ -80,8 +80,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         }
     }
 
-    public static void clearAdapter(){
-        if(movies != null)
+    public static void clearAdapter() {
+        if (movies != null)
             movies.clear();
     }
 }

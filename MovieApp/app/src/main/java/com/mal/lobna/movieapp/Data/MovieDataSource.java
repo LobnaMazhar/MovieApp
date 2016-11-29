@@ -1,7 +1,6 @@
 package com.mal.lobna.movieapp.Data;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -10,7 +9,6 @@ import com.mal.lobna.movieapp.Application.MovieApplication;
 import com.mal.lobna.movieapp.Models.Movie;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Lobna on 12-Nov-16.
@@ -68,32 +66,13 @@ public class MovieDataSource {
     }
 
     public void insertList(ArrayList<Movie> movies) {
-
         deleteNonFavouriteMovies();
 
         for (Movie movie : movies) {
-
             ContentValues contentValues = getContentValuesFromMovie(movie);
 
-            // TODO ams7 l kalam da lama insert w favourite ysht3'lu tamam
-            /*Cursor cursor = database.query(MovieContract.MovieTable.MOVIE_TABLE,
-                    null, MovieContract.MovieTable.COLOUMN_MOVIE_ORIGINAL_TITLE + " = ?", new String[]{movie.getOriginal_title()},
-                    null, null, null);
-
-            if (cursor == null)*/
             long id = database.insert(MovieContract.MovieTable.MOVIE_TABLE, null, contentValues);
             Log.v("id", Long.toString(id));
-            /*Cursor cursor = database.query(MovieContract.MovieTable.MOVIE_TABLE,
-                    null, MovieContract.MovieTable.COLOUMN_ID + " = " + insertId, null,
-                    null, null, null);
-
-            cursor.moveToFirst();
-
-            Movie movie1 = getMovieFromCursor(cursor);
-
-            movie.setId(movie1.getId());
-
-            cursor.close();*/
         }
     }
 

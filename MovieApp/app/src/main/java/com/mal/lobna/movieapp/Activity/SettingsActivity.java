@@ -6,10 +6,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 
-import com.mal.lobna.movieapp.Adapter.HomeAdapter;
-import com.mal.lobna.movieapp.Fragments.HomeFragment;
-import com.mal.lobna.movieapp.Managers.MovieManager;
-import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.R;
 
 public class SettingsActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
@@ -17,7 +13,6 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-     //   setContentView(R.layout.activity_settings);
 
         addPreferencesFromResource(R.xml.preferences);
 

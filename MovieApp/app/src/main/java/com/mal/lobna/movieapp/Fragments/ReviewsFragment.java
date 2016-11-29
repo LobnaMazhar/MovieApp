@@ -9,15 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Activity.HomeActivity;
 import com.mal.lobna.movieapp.Activity.MovieViewActivity;
 import com.mal.lobna.movieapp.Adapter.ReviewAdapter;
-import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Listeners.ReviewListener;
 import com.mal.lobna.movieapp.Managers.ReviewManager;
-import com.mal.lobna.movieapp.Managers.TrailerManager;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.Models.Review;
 import com.mal.lobna.movieapp.R;

@@ -18,7 +18,9 @@ public class Movie implements Serializable {
     private ArrayList<Trailer> trailers;
     private ArrayList<Review> reviews;
 
-    public void setId(int id) { this.id = id; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setOriginal_title(String original_title) {
         this.original_title = original_title;
@@ -48,25 +50,27 @@ public class Movie implements Serializable {
         this.favourite = favourite;
     }
 
-    public int getId(){ return id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getOriginal_title(){
+    public String getOriginal_title() {
         return original_title;
     }
 
-    public String getPoster_path(){
+    public String getPoster_path() {
         return poster_path;
     }
 
-    public String getOverview(){
+    public String getOverview() {
         return overview;
     }
 
-    public String getVote_average(){
+    public String getVote_average() {
         return vote_average;
     }
 
-    public String getRelease_date(){
+    public String getRelease_date() {
         return release_date;
     }
 }

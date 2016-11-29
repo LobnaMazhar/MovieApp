@@ -1,39 +1,23 @@
 package com.mal.lobna.movieapp.Activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.mal.lobna.movieapp.Application.MovieApplication;
-import com.mal.lobna.movieapp.Data.MovieContract;
-import com.mal.lobna.movieapp.Data.MovieDBHandler;
 import com.mal.lobna.movieapp.Data.MovieDataSource;
-import com.mal.lobna.movieapp.Fragments.HomeFragment;
-import com.mal.lobna.movieapp.Fragments.MovieViewFragment;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.R;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
-
-import java.util.List;
 
 public class MovieViewActivity extends AppCompatActivity {
 
@@ -65,33 +49,7 @@ public class MovieViewActivity extends AppCompatActivity {
         String posterPath = movie.getPoster_path();
         ImageView moviePosterImageView = (ImageView) findViewById(R.id.moviePosterImageView);
         Picasso.with(MovieApplication.getMovieApp().getApplicationContext()).load(baseURL + size + posterPath).into(moviePosterImageView);
-        //   setDominantColor();
     }
-
-    /*public void setDominantColor() {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.id.moviePosterImageView);
-        //Bitmap bitmap = BitmapFactory.decodeFile(FileCache.getFile(this , String.valueOf(flickerModel.getUrl().hashCode())).getAbsolutePath());
-
-        if (bitmap != null) {
-            Palette palette = Palette.from(bitmap).generate();
-
-            List<Palette.Swatch> swatches = palette.getSwatches();
-
-            Palette.Swatch swatch = null;
-
-            if (swatches != null && !swatches.isEmpty()) {
-
-                swatch = swatches.get(0);
-
-                if (Build.VERSION.SDK_INT >= 21) {
-
-                    getWindow().setStatusBarColor(swatch.getRgb());
-                }
-
-
-            }
-        }
-    }*/
 
     public void setFavIcon() {
         favButton.setVisibility(View.VISIBLE);

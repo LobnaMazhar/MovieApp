@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class TrailerManager {
 
-    private static String LOG_TAG = TrailerManager.class.getSimpleName();
-
     private static TrailerManager trailerManager;
 
     private ArrayList<Trailer> trailers;
@@ -47,10 +45,10 @@ public class TrailerManager {
         return trailerManager;
     }
 
-    public void getTrailers(final int id, final TrailerListener trailerListener){
-        if(!Utilities.networkConnectivity()){
+    public void getTrailers(final int id, final TrailerListener trailerListener) {
+        if (!Utilities.networkConnectivity()) {
             trailerListener.onFail(new Exception("No internet connection"));
-        }else{
+        } else {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -64,7 +62,6 @@ public class TrailerManager {
 
                         Uri builtUri = Uri.parse(baseURL).buildUpon().appendQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY).build();
                         URL url = new URL(builtUri.toString());
-                        Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
                         // Open connection
                         urlConnection = (HttpURLConnection) url.openConnection();
@@ -88,8 +85,6 @@ public class TrailerManager {
                             return;
                         }
                         trailerJSONStr = buffer.toString();
-
-                        Log.v(LOG_TAG, "Trailer JSON string : " + trailerJSONStr);
 
                         getTrailersFromJSON(trailerJSONStr);
 

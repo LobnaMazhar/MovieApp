@@ -1,51 +1,33 @@
 package com.mal.lobna.movieapp.Fragments;
 
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Adapter.HomeAdapter;
-import com.mal.lobna.movieapp.Application.MovieApplication;
-import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Data.MovieDataSource;
 import com.mal.lobna.movieapp.Listeners.CallbackListener;
 import com.mal.lobna.movieapp.Managers.MovieManager;
 import com.mal.lobna.movieapp.Models.Movie;
-import com.mal.lobna.movieapp.Activity.MovieViewActivity;
 import com.mal.lobna.movieapp.Listeners.MoviesListener;
 import com.mal.lobna.movieapp.Listeners.OnMovieClickListener;
 import com.mal.lobna.movieapp.R;
 import com.mal.lobna.movieapp.Utilities.Utilities;
-import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Lobna on 05-Oct-16.
  */
 public class HomeFragment extends android.support.v4.app.Fragment implements SwipeRefreshLayout.OnRefreshListener, MoviesListener {
-
-    private final String LOG_TAG = HomeFragment.class.getSimpleName();
 
     RecyclerView moviesHomeView;
     public HomeAdapter homeAdapter;
@@ -105,7 +87,7 @@ public class HomeFragment extends android.support.v4.app.Fragment implements Swi
         if (getActivity().findViewById(R.id.movieViewLayout) != null) {
             if (position != GridView.INVALID_POSITION) {
                 moviesHomeView.scrollToPosition(position);
-                if (movies != null && movies.size() != 0 && position != INVALID_POSITION)
+                if (movies != null && movies.size() > position && position != INVALID_POSITION)
                     ((CallbackListener) getActivity()).onItemSelected(movies.get(position));
             }
         }
@@ -122,7 +104,7 @@ public class HomeFragment extends android.support.v4.app.Fragment implements Swi
     public void onDownloadFinished(ArrayList<Movie> movies) {
         swipeToRefresh.setRefreshing(false);
 
-        if(mSavedInstanceState == null) {
+        if (mSavedInstanceState == null) {
             if (getActivity().findViewById(R.id.movieViewLayout) != null && movies.size() != 0) {
                 ((CallbackListener) getActivity()).onItemSelected(movies.get(0));
             }

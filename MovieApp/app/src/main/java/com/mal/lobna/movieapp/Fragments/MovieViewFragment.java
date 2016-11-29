@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Activity.HomeActivity;
 import com.mal.lobna.movieapp.Activity.MovieViewActivity;
-import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.R;
 
@@ -45,10 +43,10 @@ public class MovieViewFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onResume() {
-        if(getActivity().getClass().equals(MovieViewActivity.class)) {
-            arguments = ((MovieViewActivity)getActivity()).getArguments();
-        }else if(getActivity().getClass().equals(HomeActivity.class)){
-            arguments = ((HomeActivity)getActivity()).getArguments();
+        if (getActivity().getClass().equals(MovieViewActivity.class)) {
+            arguments = ((MovieViewActivity) getActivity()).getArguments();
+        } else if (getActivity().getClass().equals(HomeActivity.class)) {
+            arguments = ((HomeActivity) getActivity()).getArguments();
         }
 
         if (arguments != null) {

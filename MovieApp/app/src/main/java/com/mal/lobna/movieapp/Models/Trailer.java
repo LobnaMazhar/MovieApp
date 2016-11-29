@@ -4,7 +4,7 @@ package com.mal.lobna.movieapp.Models;
  * Created by Lobna on 18-Nov-16.
  */
 
-public class Trailer{
+public class Trailer {
     private String Id;
     private String name;
     private String key;

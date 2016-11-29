@@ -1,29 +1,20 @@
 package com.mal.lobna.movieapp.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Application.MovieApplication;
-import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Data.MovieDataSource;
-import com.mal.lobna.movieapp.Fragments.HomeFragment;
-import com.mal.lobna.movieapp.Fragments.MovieViewFragment;
 import com.mal.lobna.movieapp.Listeners.CallbackListener;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.R;
-import com.mal.lobna.movieapp.Utilities.Utilities;
 import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity implements CallbackListener {

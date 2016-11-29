@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/movieGridLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/movieGridLayout">
+    android:orientation="vertical">
 
     <ImageView
+        android:id="@+id/moviePosterImageViewGridItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/moviePosterImageViewGridItem"
-        android:src="@drawable/movie_action"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:src="@drawable/movie_action" />
 
     <ProgressBar
+        android:id="@+id/moviePosterProgressBarGridItem"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/moviePosterProgressBarGridItem"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <!--
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/movieNameTextViewGridItem" />
-    -->
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
 
 </FrameLayout>

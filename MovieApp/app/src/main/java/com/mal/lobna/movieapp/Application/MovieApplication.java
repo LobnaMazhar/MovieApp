@@ -15,7 +15,7 @@ public class MovieApplication extends Application {
         instance = this;
     }
 
-    public static MovieApplication getMovieApp(){
+    public static MovieApplication getMovieApp() {
         return instance;
     }
 }

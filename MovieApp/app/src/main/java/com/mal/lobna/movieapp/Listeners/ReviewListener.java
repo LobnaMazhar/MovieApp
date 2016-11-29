@@ -1,6 +1,5 @@
 package com.mal.lobna.movieapp.Listeners;
 
-
 import com.mal.lobna.movieapp.Models.Review;
 
 import java.util.ArrayList;

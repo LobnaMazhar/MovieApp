@@ -1,6 +1,5 @@
 package com.mal.lobna.movieapp.Managers;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -33,8 +32,6 @@ import java.util.ArrayList;
  */
 
 public class MovieManager {
-
-    private static String LOG_TAG = MovieManager.class.getSimpleName();
 
     private static MovieManager movieManager;
     Handler handler;
@@ -75,7 +72,6 @@ public class MovieManager {
                         String baseURL = MovieApplication.getMovieApp().getApplicationContext().getString(R.string.baseDiscoverURL);
                         Uri builtUri = Uri.parse(baseURL).buildUpon().appendQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY).appendQueryParameter("sort_by", sortBy).build();
                         URL url = new URL(builtUri.toString());
-                        Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
                         // Open connection
                         urlConnection = (HttpURLConnection) url.openConnection();
@@ -95,12 +91,9 @@ public class MovieManager {
                         }
 
                         if (buffer.length() == 0) {
-                            // Stream was empty.  No point in parsing.
                             return;
                         }
                         movieJsonStr = buffer.toString();
-
-                        Log.v(LOG_TAG, "Movie JSON string : " + movieJsonStr);
 
                         getMovieDataFromJson(movieJsonStr);
 
@@ -115,7 +108,6 @@ public class MovieManager {
                         });
 
                     } catch (IOException e) {
-                        Log.e(LOG_TAG, "Error ", e);
                         // If the code didn't successfully get the movie data, there's no point in attempting
                         // to parse it.
                         movieJsonStr = null;
@@ -129,7 +121,7 @@ public class MovieManager {
                             try {
                                 reader.close();
                             } catch (final IOException e) {
-                                Log.e(LOG_TAG, "Error closing stream", e);
+                                e.printStackTrace();
                             }
                         }
                     }
@@ -163,7 +155,7 @@ public class MovieManager {
         MovieDataSource.getInstance().insertList(movies);
     }
 
-    public static ArrayList<Movie> getMoviesList(){
+    public static ArrayList<Movie> getMoviesList() {
         return movies;
     }
 }

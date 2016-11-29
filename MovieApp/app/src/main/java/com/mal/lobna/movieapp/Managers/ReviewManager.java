@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class ReviewManager {
 
-    private final String LOG_TAG = ReviewManager.class.getSimpleName();
-
     private static ReviewManager reviewManager;
 
     private ArrayList<Review> reviews;
@@ -66,7 +64,6 @@ public class ReviewManager {
 
                         Uri builtUri = Uri.parse(baseURL).buildUpon().appendQueryParameter("api_key", BuildConfig.THE_MOVIE_DB_API_KEY).build();
                         URL url = new URL(builtUri.toString());
-                        Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
                         // Open connection
                         urlConnection = (HttpURLConnection) url.openConnection();
@@ -90,8 +87,6 @@ public class ReviewManager {
                             return;
                         }
                         reviewJSONStr = buffer.toString();
-
-                        Log.v(LOG_TAG, "Review JSON string : " + reviewJSONStr);
 
                         getReviewsFromJSONStr(reviewJSONStr);
 

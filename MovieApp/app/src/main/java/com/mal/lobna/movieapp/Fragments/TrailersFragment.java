@@ -11,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Activity.HomeActivity;
 import com.mal.lobna.movieapp.Activity.MovieViewActivity;
 import com.mal.lobna.movieapp.Adapter.TrailerAdapter;
-import com.mal.lobna.movieapp.Data.MovieContract;
 import com.mal.lobna.movieapp.Managers.TrailerManager;
 import com.mal.lobna.movieapp.Models.Movie;
 import com.mal.lobna.movieapp.Models.Trailer;
@@ -50,15 +48,15 @@ public class TrailersFragment extends android.support.v4.app.Fragment implements
         return rootView;
     }
 
-    public void getTrailers(){
+    public void getTrailers() {
         Bundle arguments = null;
-        if(getActivity().getClass().equals(MovieViewActivity.class)) {
-            arguments = ((MovieViewActivity)getActivity()).getArguments();
-        }else if(getActivity().getClass().equals(HomeActivity.class)){
-            arguments = ((HomeActivity)getActivity()).getArguments();
+        if (getActivity().getClass().equals(MovieViewActivity.class)) {
+            arguments = ((MovieViewActivity) getActivity()).getArguments();
+        } else if (getActivity().getClass().equals(HomeActivity.class)) {
+            arguments = ((HomeActivity) getActivity()).getArguments();
         }
 
-        if(arguments != null) {
+        if (arguments != null) {
             int movieID = ((Movie) arguments.getSerializable("item")).getId();
             TrailerManager.getInstance().getTrailers(movieID, this);
         }
@@ -84,7 +82,7 @@ public class TrailersFragment extends android.support.v4.app.Fragment implements
         movieTrailersRecyclerView.setAdapter(trailerAdapter);
     }
 
-    public void watchYoutubeVideo(String id){
+    public void watchYoutubeVideo(String id) {
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + id));
         Intent webIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://www.youtube.com/watch?v=" + id));
