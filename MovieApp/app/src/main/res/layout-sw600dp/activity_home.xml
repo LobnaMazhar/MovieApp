@@ -25,7 +25,8 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/movieViewNestedScrollView">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,8 +44,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/moviePosterImageView"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/movie_action"/>
+                        android:scaleType="fitXY"/>
 
                     <android.support.design.widget.FloatingActionButton
                         android:id="@+id/favouriteMovie"
@@ -52,7 +52,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/fab_margin"
                         android:src="@android:drawable/btn_star_big_off"
-                        android:layout_gravity="right"/>
+                        android:layout_gravity="right"
+                        android:visibility="invisible"/>
 
                 </LinearLayout>
 
@@ -62,30 +63,20 @@
                     android:layout_weight="2">
 
                     <include layout="@layout/content_movie_view" />
-
                 </LinearLayout>
 
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/moveToUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/arrow_up_float"
+                    android:onClick="moveToUp"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:layout_gravity="bottom|end"
+                    android:visibility="invisible"/>
 
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>
-
-
     </LinearLayout>
-
-    <!--<android.support.v4.widget.NestedScrollView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:id="@+id/movieViewLayout"
-        android:layout_weight="1"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>-->
-
-    <!--<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/movieViewLayout"
-        tools:context="com.mal.lobna.movieapp.Activity.MovieViewActivity"/>-->
-
 </LinearLayout>

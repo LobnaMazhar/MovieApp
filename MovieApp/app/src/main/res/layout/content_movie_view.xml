@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mal.lobna.movieapp.Activity.MovieViewActivity"
-    tools:showIn="@layout/activity_movie_view">
+    tools:showIn="@layout/activity_movie_view"
+    android:id="@+id/movieViewNestedScrollView">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_weight="1.5"
             android:name="com.mal.lobna.movieapp.Fragments.MovieViewFragment"
             android:id="@+id/movieViewFragment"
-            tools:layout="@layout/fragment_movie_view"/>
+            tools:layout="@layout/fragment_movie_view" />
 
         <fragment
             android:layout_width="match_parent"

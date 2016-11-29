@@ -1,5 +1,6 @@
 package com.mal.lobna.movieapp.Utilities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -37,8 +38,8 @@ public class Utilities {
         return false;
     }
 
-    public static void noInternet(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(MovieApplication.getMovieApp().getApplicationContext());
+    public static void noInternet(Activity activity){
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle("Internet connection");
         builder.setMessage("Connect to a network");
 

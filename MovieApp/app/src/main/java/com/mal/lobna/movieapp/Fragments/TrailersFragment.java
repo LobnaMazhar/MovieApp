@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Activity.HomeActivity;
@@ -34,11 +35,12 @@ public class TrailersFragment extends android.support.v4.app.Fragment implements
 
     private static RecyclerView movieTrailersRecyclerView;
     private TrailerAdapter trailerAdapter;
+    View rootView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_movie_trailers, container, false);
+        rootView = inflater.inflate(R.layout.fragment_movie_trailers, container, false);
 
         movieTrailersRecyclerView = (RecyclerView) rootView.findViewById(R.id.movieTrailersRecyclerView);
         movieTrailersRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -70,6 +72,9 @@ public class TrailersFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public void onDownloadFinished(final ArrayList<Trailer> trailers) {
+        TextView trailersTextView = (TextView) rootView.findViewById(R.id.trailersTextView);
+        trailersTextView.setVisibility(View.VISIBLE);
+
         trailerAdapter = new TrailerAdapter(getActivity(), trailers, new OnTrailerClickListener() {
             @Override
             public void onTrailerClick(Trailer trailer) {
@@ -92,6 +97,6 @@ public class TrailersFragment extends android.support.v4.app.Fragment implements
 
     @Override
     public void onFail(Exception e) {
-        Utilities.noInternet();
+        Utilities.noInternet(getActivity());
     }
 }

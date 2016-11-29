@@ -39,21 +39,21 @@ public class MovieManager {
     private static MovieManager movieManager;
     Handler handler;
 
-    ArrayList<Movie> movies = new ArrayList<>();
+    private static ArrayList<Movie> movies = new ArrayList<>();
 
-    public static MovieManager getInstance(){
-        if(movieManager == null){
+    public static MovieManager getInstance() {
+        if (movieManager == null) {
             movieManager = new MovieManager();
             movieManager.handler = new Handler();
         }
         return movieManager;
     }
 
-    public void getMovies(final MoviesListener moviesListener){
+    public void getMovies(final MoviesListener moviesListener) {
         Context context = MovieApplication.getMovieApp().getApplicationContext();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final String sortBy = sharedPreferences.getString(context.getString(R.string.sortMoviesBy_prefKey), context.getResources().getString(R.string.sortMoviesBy_defaultPrefValue));
-        if(sortBy.equals(context.getString(R.string.favourites_prefValueID))){
+        if (sortBy.equals(context.getString(R.string.favourites_prefValueID))) {
             movies = MovieDataSource.getInstance().getFavourites();
             handler.post(new Runnable() {
                 @Override
@@ -61,10 +61,9 @@ public class MovieManager {
                     moviesListener.onDownloadFinished(movies);
                 }
             });
-        }
-        else if(!Utilities.networkConnectivity()){
+        } else if (!Utilities.networkConnectivity()) {
             moviesListener.onFail(new Exception("No internet connection"));
-        }else{
+        } else {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -162,5 +161,9 @@ public class MovieManager {
 
     public void saveMovies(ArrayList<Movie> movies) {
         MovieDataSource.getInstance().insertList(movies);
+    }
+
+    public static ArrayList<Movie> getMoviesList(){
+        return movies;
     }
 }

@@ -7,12 +7,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Trailers: "
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"/>
+        android:id="@+id/trailersTextView"
+        android:layout_margin="@dimen/text_margin"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+        android:visibility="invisible"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/movieTrailersRecyclerView"
         android:dividerHeight="1dp"
+        android:layout_margin="@dimen/text_margin"
         android:divider="@color/colorAccent"></android.support.v7.widget.RecyclerView>
 </LinearLayout>

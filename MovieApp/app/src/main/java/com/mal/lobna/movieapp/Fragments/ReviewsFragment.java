@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mal.lobna.movieapp.Activity.HomeActivity;
@@ -38,8 +39,7 @@ public class ReviewsFragment extends Fragment implements ReviewListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if(rootView == null)
-            rootView = inflater.inflate(R.layout.fragment_movie_reviews, container, false);
+        rootView = inflater.inflate(R.layout.fragment_movie_reviews, container, false);
 
         movieReviewsRecyclerView = (RecyclerView) rootView.findViewById(R.id.movieReviewsRecyclerView);
         movieReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -49,15 +49,15 @@ public class ReviewsFragment extends Fragment implements ReviewListener {
         return rootView;
     }
 
-    public void getReviews(){
+    public void getReviews() {
         Bundle arguments = null;
-        if(getActivity().getClass().equals(MovieViewActivity.class)) {
-            arguments = ((MovieViewActivity)getActivity()).getArguments();
-        }else if(getActivity().getClass().equals(HomeActivity.class)){
-            arguments = ((HomeActivity)getActivity()).getArguments();
+        if (getActivity().getClass().equals(MovieViewActivity.class)) {
+            arguments = ((MovieViewActivity) getActivity()).getArguments();
+        } else if (getActivity().getClass().equals(HomeActivity.class)) {
+            arguments = ((HomeActivity) getActivity()).getArguments();
         }
 
-        if(arguments != null) {
+        if (arguments != null) {
             int movieID = ((Movie) arguments.getSerializable("item")).getId();
             ReviewManager.getInstance().getReviews(movieID, this);
         }
@@ -71,12 +71,15 @@ public class ReviewsFragment extends Fragment implements ReviewListener {
 
     @Override
     public void onDownloadFinished(ArrayList<Review> reviews) {
+        TextView reviewsTextView = (TextView) rootView.findViewById(R.id.reviewsTextView);
+        reviewsTextView.setVisibility(View.VISIBLE);
+
         reviewAdapter = new ReviewAdapter(getActivity(), reviews);
         movieReviewsRecyclerView.setAdapter(reviewAdapter);
     }
 
     @Override
     public void onFail(Exception e) {
-        Utilities.noInternet();
+        Utilities.noInternet(getActivity());
     }
 }
